@@ -29,6 +29,15 @@ class Triangle {
 	    return det > 0;
 	}
     }
+
+    vertices() {
+	return this.vertices;
+    }
+
+    edges() {
+	const [p0, p1, p2] = this.vertices;
+	return [[p0, p1], [p1, p2], [p2, p0]];
+    }
 }
 
 function delaunay(points) {
