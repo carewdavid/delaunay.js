@@ -30,3 +30,49 @@ class Triangle {
 	}
     }
 }
+
+function delaunay(points) {
+    //Bowyer-Watson algorigthm
+    let tris = [];
+    const superTri = makeSuperTriangle(points)
+    tris.push(superTri);
+    for (let point of points) {
+	let badTriangles = [];
+	for (let tri of tris) {
+	    if(tri.isInCircumcircle(p)){
+		badTriangles.push(tri);
+	    }
+	}
+
+	let polygon = [];
+	for (let tri of badTriangles) {
+	    for (let edge of tri.edges()) {
+		if(tris.every((tri) => tris.edges().indexOf(edge) = -1)){
+		    polygon.push(edge);
+		}
+	    }
+	}
+
+	for (let tri of badTriangles) {
+	    //Remove all bad triangles
+	    const index = tris.indexOf(tri);
+	    tris.splice(index, 1);
+	}
+
+	for (let edge of polygon) {
+	    const [p0, p1] = edge;
+	    tris.push(new Triangle(p0, p1, point));
+	}
+
+    }
+
+    for (let tri of tris) {
+	if(!tri.vertices().every((vertex) => superTri.vertices().indexOf(vertex) == -1)){
+	    const index = tris.indexOf(tri);
+	    tris.splice(index, -1);
+	}
+    }
+}
+
+	
+	
