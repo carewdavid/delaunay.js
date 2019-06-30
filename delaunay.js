@@ -40,11 +40,47 @@ class Triangle {
     }
 }
 
+//Return a triangle enclosing all points
+function makeSuperTriangle(points){
+    //Find the outermost points
+    const minX = points[0][0];
+    const maxX = points[0][0];
+    const minY = points[0][1];
+    const maxY = points[0][1];
+
+    for (let [x, y] of points) {
+	if(x < minX){
+	    minX = x;
+	}
+	if(x > maxX){
+	    maxX = x;
+	}
+	if(y < minY){
+	    minY = y;
+	}
+	if(y > maxY){
+	    maxY = y;
+	}
+    }
+
+    //Add some breathing room
+    minX = minX * minX  * Math.sign(minX);
+    maxX = maxX * maxX  * Math.sign(maxX);
+    minY = minY * minY  * Math.sign(minY);
+    maxY = maxY * maxY  * Math.sign(maxY);
+
+    //
+    return [new Triangle([minX, minY], [minX, maxY], [maxX, minY]),
+	    new Triangle([minX, maxY], [maxX, maxY], [maxX, minY])];
+    
+}
+
 function delaunay(points) {
     //Bowyer-Watson algorigthm
     let tris = [];
     const superTri = makeSuperTriangle(points)
-    tris.push(superTri);
+    //It turns out to be easier to make two super triangles
+    tris = tris.concat(superTri);
     for (let point of points) {
 	let badTriangles = [];
 	for (let tri of tris) {
