@@ -3,7 +3,7 @@
 class Triangle {
     constructor(p0, p1, p2) {
 	this.vertices = [p0, p1, p2];
-	const center = [(p0[0] + p1[0] + p2[0]) / 3, (p0[1] + p1[1] + p2[1]) / 3];
+
 	//Sort the vertices counterclockwise for the circumcircle calculations
 	this.vertices.sort((a, b) => {
 	    return Math.atan2(a[1] / a[0]) - Math.atan2(b[1] / b[0]);
