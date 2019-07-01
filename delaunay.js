@@ -112,9 +112,10 @@ function delaunay(points) {
 	}
 
 	let polygon = [];
-	for (let tri of badTriangles) {
-	    for (let edge of tri.edges()) {
-		if(tris.every((tri) => tris.edges().indexOf(edge) = -1)){
+	for (let bad of badTriangles) {
+	    for (let edge of bad.edges()) {
+		for (let tri of badTriangles)
+		    if(tri != bad && tri.hasEdge(edge)){
 		    polygon.push(edge);
 		}
 	    }
@@ -134,9 +135,11 @@ function delaunay(points) {
     }
 
     for (let tri of tris) {
-	if(!tri.vertices().every((vertex) => superTri.vertices().indexOf(vertex) == -1)){
-	    const index = tris.indexOf(tri);
-	    tris.splice(index, -1);
+	for( let vertex of tri.vertices()){
+	    if(superTri[0].hasVertex(vertex)){
+		const index = tris.indexOf(tri);
+		tris.splice(index, -1);
+	    }
 	}
     }
 }
