@@ -87,12 +87,11 @@ function makeSuperTriangle(points){
     }
 
     //Add some breathing room
-    minX = minX * minX  * Math.sign(minX);
-    maxX = maxX * maxX  * Math.sign(maxX);
-    minY = minY * minY  * Math.sign(minY);
-    maxY = maxY * maxY  * Math.sign(maxY);
+    minX = 2 * minX - maxX;
+    maxX = 2 * maxX - minX;
+    minY = 2 * minY - maxY;
+    maxY = 2 * maxY - minY;
 
-    //
     return [new Triangle([minX, minY], [minX, maxY], [maxX, minY]),
         new Triangle([minX, maxY], [maxX, maxY], [maxX, minY])];
 
