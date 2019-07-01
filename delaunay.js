@@ -65,10 +65,10 @@ class Triangle {
 //Return a triangle enclosing all points
 function makeSuperTriangle(points){
     //Find the outermost points
-    const minX = points[0][0];
-    const maxX = points[0][0];
-    const minY = points[0][1];
-    const maxY = points[0][1];
+    let minX = points[0][0];
+    let maxX = points[0][0];
+    let minY = points[0][1];
+    let maxY = points[0][1];
 
     for (let [x, y] of points) {
 	if(x < minX){
