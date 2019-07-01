@@ -2,40 +2,41 @@
 
 class Triangle {
     constructor(p0, p1, p2) {
-        this.vertices = [p0, p1, p2];
+        this.vertexes = [p0, p1, p2];
 
-        //Sort the vertices counterclockwise for the circumcircle calculations
-        this.vertices.sort((a, b) => {
+        //Sort the vertexes counterclockwise for the circumcircle calculations
+        this.vertexes.sort((a, b) => {
             return Math.atan2(a[1] / a[0]) - Math.atan2(b[1] / b[0]);
         })
 
-        this.isInCircumcircle = function (p) {
+    }
 
-            const [x0, y0] = this.vertices[0];
-            const [x1, y1] = this.vertices[1];
-            const [x2, y2] = this.vertices[2];
-            //According to https://en.wikipedia.org/wiki/Delaunay_triangulation#Algorithms
-            //this will determine if p is in the circumcircle of the triangle 
-            const row0 = [x0 - p[0], y0 - p[1], Math.pow(x0 - p[0], 2) + Math.pow(y0 - p[1], 2)];
-            const row1 = [x1 - p[0], y1 - p[1], Math.pow(x1 - p[0], 2) + Math.pow(y1 - p[1], 2)];
-            const row2 = [x2 - p[0], y0 - p[1], Math.pow(x2 - p[0], 2) + Math.pow(y2 - p[1], 2)];
+    isInCircumcircle(p) {
 
-            const det = row0[0] * row1[1] * row2[2] +
-                row0[1] * row1[2] * row2[0] +
-                row0[2] * row1[0] * row2[1] -
-                row0[2] * row1[1] * row2[0] -
-                row0[1] * row1[0] * row2[2] -
-                row0[0] * row1[2] * row2[1];
-            return det > 0;
-        }
+        const [x0, y0] = this.vertexes[0];
+        const [x1, y1] = this.vertexes[1];
+        const [x2, y2] = this.vertexes[2];
+        //According to https://en.wikipedia.org/wiki/Delaunay_triangulation#Algorithms
+        //this will determine if p is in the circumcircle of the triangle 
+        const row0 = [x0 - p[0], y0 - p[1], Math.pow(x0 - p[0], 2) + Math.pow(y0 - p[1], 2)];
+        const row1 = [x1 - p[0], y1 - p[1], Math.pow(x1 - p[0], 2) + Math.pow(y1 - p[1], 2)];
+        const row2 = [x2 - p[0], y0 - p[1], Math.pow(x2 - p[0], 2) + Math.pow(y2 - p[1], 2)];
+
+        const det = row0[0] * row1[1] * row2[2] +
+              row0[1] * row1[2] * row2[0] +
+              row0[2] * row1[0] * row2[1] -
+              row0[2] * row1[1] * row2[0] -
+              row0[1] * row1[0] * row2[2] -
+              row0[0] * row1[2] * row2[1];
+        return det > 0;
     }
 
     vertices() {
-        return this.vertices;
+        return this.vertexes;
     }
 
     edges() {
-        const [p0, p1, p2] = this.vertices;
+        const [p0, p1, p2] = this.vertexes;
         return [[p0, p1], [p1, p2], [p2, p0]];
     }
 
@@ -53,7 +54,7 @@ class Triangle {
     }
 
     hasVertex([x, y]) {
-        for(let point of this.vertices){
+        for(let point of this.vertexes){
             if(point[0] === x && point[1] === y){
                 return true;
             }
@@ -103,7 +104,11 @@ function delaunay(points) {
     const superTri = makeSuperTriangle(points)
     //It turns out to be easier to make two super triangles
     tris = tris.concat(superTri);
+    console.log(`Created super triangles ${superTri[0]} and ${superTri[1]}.`);
+
+
     for (let point of points) {
+        console.log(`Adding point ${point}.`);//debug
         let badTriangles = [];
         for (let tri of tris) {
             if(tri.isInCircumcircle(point)){
@@ -140,6 +145,13 @@ function delaunay(points) {
                 const index = tris.indexOf(tri);
                 tris.splice(index, -1);
             }
+            if(superTri[1].hasVertex(vertex)){
+                const index = tris.indexOf(tri);
+                tris.splice(index, -1);
+            }
         }
     }
+    return tris;
 }
+
+module.exports = {delaunay, Triangle};
