@@ -106,7 +106,7 @@ function delaunay(points) {
     for (let point of points) {
 	let badTriangles = [];
 	for (let tri of tris) {
-	    if(tri.isInCircumcircle(p)){
+	    if(tri.isInCircumcircle(point)){
 		badTriangles.push(tri);
 	    }
 	}
