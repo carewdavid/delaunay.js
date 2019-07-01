@@ -38,6 +38,28 @@ class Triangle {
 	const [p0, p1, p2] = this.vertices;
 	return [[p0, p1], [p1, p2], [p2, p0]];
     }
+
+    //True if the triangle contains the edge [p0, p1]
+    hasEdge([p0, p1]) {
+	for (let edge of this.edges()){
+	    const [start, end] = edge;
+	    
+	    //Comparing floats like this is a little icky, but we don't do any math so shouldn't have to worry about rounding issues throwing this off
+	    if(start === p0 && end === p1){
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    hasVertex([x, y]) {
+	for(let point of this.vertices){
+	    if(point[0] === x && point[1] === y){
+		return true;
+	    }
+	}
+	return false;
+    }
 }
 
 //Return a triangle enclosing all points
