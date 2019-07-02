@@ -1,0 +1,23 @@
+{
+  "name": "delaunay.js",
+  "version": "1.0.0",
+  "description": "Compute the 2d delaunay triangulation of a set of points",
+  "main": "delaunay.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carewdavid/delaunay.js.git"
+  },
+  "author": "David Carew",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/carewdavid/delaunay.js/issues"
+  },
+  "homepage": "https://github.com/carewdavid/delaunay.js#readme",
+  "devDependencies": {
+    "eslint": "^6.0.1",
+    "mocha": "^6.1.4"
+  }
+}
