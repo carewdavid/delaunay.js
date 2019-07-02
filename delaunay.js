@@ -6,7 +6,7 @@ class Triangle {
 
         //Sort the vertexes counterclockwise for the circumcircle calculations
         this.vertexes.sort((a, b) => {
-            return Math.atan2(a[1] / a[0]) - Math.atan2(b[1] / b[0]);
+            return Math.atan2(a[1], a[0]) - Math.atan2(b[1], b[0]);
         })
 
     }
